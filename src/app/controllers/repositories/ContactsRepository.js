@@ -11,25 +11,25 @@ class ContactRepostory {
     return rows;
   }
 
- async findById(id) {
+  async findById(id) {
     const [row] = await db.query(`
     SELECT contacts.*, categories.name AS category_name
     FROM contacts
     LEFT JOIN categories ON categories.id = contacts.category_id
      WHERE contacts.id = $1 `, [id]);
-    return row
+    return row;
   }
 
- async findByEmail(email) {
-  const [row] = await db.query('SELECT * FROM contacts WHERE email = $1 ', [email]);
-  return row
+  async findByEmail(email) {
+    const [row] = await db.query('SELECT * FROM contacts WHERE email = $1 ', [email]);
+    return row;
   }
 
- async delete(id) {
+  async delete(id) {
     const deleteOp = await db.query(`
     DELETE FROM contacts WHERE id = $1
     `, [id]);
-   return deleteOp;
+    return deleteOp;
   }
 
   async create({
@@ -44,16 +44,16 @@ class ContactRepostory {
     return row;
   }
 
- async update(id, {
+  async update(id, {
     name, email, phone, category_id,
   }) {
-   const [row] = await db.query(`
+    const [row] = await db.query(`
     UPDATE contacts
     SET name = $1, email = $2, phone = $3, category_id = $4
     WHERE id = $5
     RETURNING *
     `, [name, email, phone, category_id, id]);
-   return row
+    return row;
   }
 }
 
